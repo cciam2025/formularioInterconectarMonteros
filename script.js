@@ -1,14 +1,11 @@
 // ==================================================================
-// SCRIPT.JS - VERSIÓN FINAL Y COMPLETA
+// SCRIPT.JS - VERSIÓN FINAL Y CORREGIDA
 // ==================================================================
 
-// ¡¡¡IMPORTANTE!!! ASEGÚRATE DE QUE ESTA URL SEA LA CORRECTA
+// ¡¡¡IMPORTANTE!!! ESTA ES LA URL DE TU SCRIPT DE GOOGLE
 const scriptURL = 'https://script.google.com/macros/s/AKfycbxeZT-bL1aVALP3P0skUTLQ2deAw1s14yduhX0h8J3aC9OYSkZgwLzLwCOREL3V7kfe/exec';
 
-// --- REFERENCIAS A ELEMENTOS DEL DOM ---
-const form = document.getElementById('registroForm');
-
-// --- REFERENCIAS A ELEMENTOS DEL DOM ---
+// --- REFERENCIAS A ELEMENTOS DEL DOM (Definidas una sola vez) ---
 const form = document.getElementById('registroForm');
 const submitBtn = document.getElementById('submit-btn');
 const mensajeDiv = document.getElementById('mensaje');
