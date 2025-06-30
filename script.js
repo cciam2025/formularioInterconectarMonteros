@@ -3,7 +3,7 @@
 // ==================================================================
 
 // ¡¡¡IMPORTANTE!!! ASEGÚRATE DE QUE ESTA URL SEA LA CORRECTA
-const scriptURL = 'https://script.google.com/macros/s/AKfycbxYEbo8cbldgA4rENbtzuZXmV9waBru3db89SWuqf9j0XU5jsjCRbdBAMB4vaP0fqpp/exechttps://script.google.com/macros/s/AKfycbw0B7Cp4lhaxZ9DvEL09wxiumVhEJMfYnY7nijeNYvkrIaPEdv5lw7MuXTJESOtAOcL/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbxdQ24iUnyB4agAGLerf6zFxw2UmIEODK8rk8TIaPM889-Gxr_auwX-KflCzApOLb4m/exec';
 
 // Se espera a que todo el contenido HTML de la página esté cargado antes de ejecutar el script.
 // Esto previene errores de "elemento no encontrado".
