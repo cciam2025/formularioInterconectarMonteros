@@ -3,7 +3,9 @@
 // ==================================================================
 
 // ¡¡¡IMPORTANTE!!! ASEGÚRATE DE QUE ESTA URL SEA LA CORRECTA
-const scriptURL = 'https://script.google.com/macros/s/AKfycby3RGHGXhHYeIGZWiq3nzSvRHUZ6BS4a4N1IHWTkReZF4oQkjOwvvk74raPMFHIOhFO/exec';
+git add script.js
+git commit -m "https://script.google.com/macros/s/AKfycbxeZT-bL1aVALP3P0skUTLQ2deAw1s14yduhX0h8J3aC9OYSkZgwLzLwCOREL3V7kfe/exec"
+git push origin main
 
 // --- REFERENCIAS A ELEMENTOS DEL DOM ---
 const form = document.getElementById('registroForm');
