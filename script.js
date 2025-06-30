@@ -1,19 +1,17 @@
 // ==================================================================
-// SCRIPT.JS - VERSIÓN FINAL REVISADA
+// SCRIPT.JS - VERSIÓN FINAL CON MÉTODO FORMDATA (ANTI-CORS)
 // ==================================================================
 
 // ¡¡¡IMPORTANTE!!! ASEGÚRATE DE QUE ESTA URL SEA LA CORRECTA
-const scriptURL = 'https://script.google.com/macros/s/AKfycbxdQ24iUnyB4agAGLerf6zFxw2UmIEODK8rk8TIaPM889-Gxr_auwX-KflCzApOLb4m/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbzndv2fIg1KT19jfys7kZhtFBff1Cl-MU4XIzum0t8Mvjdzd5pk2VWk9C84JZfo9-m6/exec';
 
-// Se espera a que todo el contenido HTML de la página esté cargado antes de ejecutar el script.
-// Esto previene errores de "elemento no encontrado".
 document.addEventListener('DOMContentLoaded', function() {
 
     // --- REFERENCIAS A ELEMENTOS DEL DOM ---
     const form = document.getElementById('registroForm');
     if (!form) {
         console.error("Error crítico: No se encontró el formulario con id 'registroForm'.");
-        return; // Detiene el script si el formulario no existe.
+        return;
     }
 
     const submitBtn = document.getElementById('submit-btn');
@@ -30,9 +28,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let especialistaCounter = 0;
     let fotoBase64 = null;
 
-    // --- LÓGICA DE INTERACTIVIDAD ---
-
-    // Lógica para mostrar/ocultar el campo "Otro" rubro
+    // --- LÓGICA DE INTERACTIVIDAD (SIN CAMBIOS) ---
+    // ... (toda la lógica de acordeón, especialistas, etc. sigue aquí igual)
     if (rubroSelect) {
         rubroSelect.addEventListener('change', () => {
             if (rubroSelect.value === 'Otro') {
@@ -45,8 +42,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-
-    // Lógica para la vista previa de la foto
     if (fileUpload) {
         fileUpload.addEventListener('change', (e) => {
             const file = e.target.files[0];
@@ -61,8 +56,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-
-    // Lógica para quitar la foto seleccionada
     if (removeImageBtn) {
         removeImageBtn.addEventListener('click', () => {
             fileUpload.value = '';
@@ -71,8 +64,6 @@ document.addEventListener('DOMContentLoaded', function() {
             imagePreviewContainer.style.display = 'none';
         });
     }
-    
-    // Lógica para añadir un nuevo bloque de especialista
     if (addEspecialistaBtn) {
         addEspecialistaBtn.addEventListener('click', () => {
             especialistaCounter++;
@@ -92,8 +83,6 @@ document.addEventListener('DOMContentLoaded', function() {
             especialistasContainer.appendChild(newEspecialistaBloque);
         });
     }
-
-    // Lógica para la interactividad de los checkboxes "Cerrado"
     document.querySelectorAll('.cerrado-check').forEach(checkbox => {
         checkbox.addEventListener('change', (e) => {
             const parentContainer = e.target.closest('.cerrado-check-container');
@@ -107,8 +96,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-
-    // Lógica para el despliegue del ACORDEÓN
     document.querySelectorAll('.acordeon-header').forEach(button => {
         button.addEventListener('click', () => {
             const acordeonContent = button.nextElementSibling;
@@ -123,61 +110,74 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // --- LÓGICA DE ENVÍO DEL FORMULARIO ---
+
+    // ==================================================================
+    // LÓGICA DE ENVÍO DEL FORMULARIO (¡¡¡MODIFICADA!!!)
+    // ==================================================================
     form.addEventListener('submit', e => {
         e.preventDefault();
         submitBtn.disabled = true;
         submitBtn.textContent = 'Enviando...';
         
+        // 1. Usamos FormData, igual que en el proyecto CAME
         const formData = new FormData(form);
-        const horariosData = {};
+
+        // 2. Procesamos los datos complejos y los añadimos como texto al FormData
+        
+        // a) Horarios
+        let horariosString = "";
         const dias = ["lunes", "martes", "miercoles", "jueves", "viernes", "sabado", "domingo"];
         dias.forEach(dia => {
-            const isCerrado = formData.get(`cerrado_${dia}`);
-            horariosData[dia] = {
-                manana: isCerrado ? "Cerrado" : formData.get(`horario_${dia}_manana`) || "",
-                tarde: isCerrado ? "Cerrado" : formData.get(`horario_${dia}_tarde`) || ""
-            };
+            if (!formData.get(`cerrado_${dia}`)) {
+                const manana = formData.get(`horario_${dia}_manana`);
+                const tarde = formData.get(`horario_${dia}_tarde`);
+                if (manana || tarde) {
+                    let diaCapitalizado = dia.charAt(0).toUpperCase() + dia.slice(1);
+                    horariosString += `${diaCapitalizado}: ${manana || ''} ${tarde ? 'y ' + tarde : ''}. `;
+                }
+            }
         });
+        formData.append("horarios_compilado", horariosString || "No especificado");
 
-        const socialesData = {
-            instagram: formData.get('instagram') || "",
-            facebook: formData.get('facebook') || "",
-            whatsapp: formData.get('whatsapp') || ""
-        };
+        // b) Redes Sociales
+        let socialesString = "";
+        const instagram = formData.get('instagram');
+        const facebook = formData.get('facebook');
+        if (instagram) socialesString += `Instagram: https://instagram.com/${instagram} | `;
+        if (facebook) socialesString += `Facebook: ${facebook.startsWith('http') ? facebook : 'https://facebook.com/' + facebook} | `;
+        if (socialesString.endsWith(' | ')) socialesString = socialesString.slice(0, -3);
+        formData.append("redes_compilado", socialesString);
         
+        // c) Foto (añadida como texto Base64)
+        if (fotoBase64) {
+            formData.append("foto_base64", fotoBase64);
+        }
+
+        // d) Especialistas (añadidos como un bloque de texto JSON)
         const especialistasData = [];
         document.querySelectorAll('.especialista-bloque').forEach(bloque => {
             const id = bloque.dataset.id;
             especialistasData.push({
-                nombre: formData.get(`nombre_esp_${id}`), especialidad: formData.get(`especialidad_esp_${id}`),
-                dias: formData.get(`dias_esp_${id}`), horarios: formData.get(`horarios_esp_${id}`),
-                obras_sociales: formData.get(`obrasocial_esp_${id}`), contacto: formData.get(`contacto_esp_${id}`)
+                nombre: formData.get(`nombre_esp_${id}`),
+                especialidad: formData.get(`especialidad_esp_${id}`),
+                dias: formData.get(`dias_esp_${id}`),
+                horarios: formData.get(`horarios_esp_${id}`),
+                obras_sociales: formData.get(`obrasocial_esp_${id}`),
+                contacto: formData.get(`contacto_esp_${id}`)
             });
         });
-        
-        const payload = {
-            institucion: {
-                nombre_establecimiento: formData.get('nombre_establecimiento'),
-                rubro: formData.get('rubro') === 'Otro' ? formData.get('rubro_otro') : formData.get('rubro'),
-                direccion: formData.get('direccion'),
-                contacto_responsable: formData.get('contacto_responsable'),
-                email_responsable: formData.get('email_responsable')
-            },
-            horarios: horariosData,
-            sociales: socialesData,
-            especialistas: especialistasData,
-            foto: fotoBase64
-        };
-        
+        if (especialistasData.length > 0) {
+            formData.append("especialistas_json", JSON.stringify(especialistasData));
+        }
+
+        // 3. Hacemos el fetch, pero SIN headers de JSON
         fetch(scriptURL, { 
-            method: 'POST', mode: 'cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
+            method: 'POST',
+            body: formData
         })
-        .then(response => response.json())
+        .then(response => response.json()) // Esperamos una respuesta JSON de éxito/error
         .then(data => {
-            if (data.result === "success"){
+            if (data.result === "success") {
                 mensajeDiv.style.color = "lightgreen";
                 mensajeDiv.textContent = "¡Registro exitoso! Gracias por sumarte.";
                 form.reset();
@@ -187,13 +187,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 especialistaCounter = 0;
                 document.querySelectorAll('.acordeon-header.active').forEach(button => button.click());
             } else {
-                throw new Error(data.message || 'Error desconocido.');
+               throw new Error(data.message || 'El script de Google devolvió un error.');
             }
         })
         .catch(error => {
             mensajeDiv.style.color = "tomato";
             mensajeDiv.textContent = `Error: ${error.message}. Por favor, intentá de nuevo.`;
-            console.error('Error!', error);
+            console.error('Error en el envío:', error);
         })
         .finally(() => {
             submitBtn.disabled = false;
