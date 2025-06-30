@@ -1,0 +1,361 @@
+/* style.css (ACTUALIZADO) */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+:root {
+  --color-gold: #c5a438;
+  --color-dark-bg: #1a1a1a;
+  --color-light-bg: rgba(44, 44, 44, 0.9); /* Hacemos el fondo del form semi-transparente */
+  --color-text: #f0f0f0;
+  --color-text-muted: #aaa;
+  --color-border: #555; /* Borde un poco más visible */
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 40px 20px;
+  color: var(--color-text);
+  
+  /* --- NUEVO: FONDO DE PANTALLA --- */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('fondo-tucuman.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+}
+
+.container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 30px;
+  background-color: var(--color-light-bg);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--color-border); /* Añadimos un borde sutil */
+}
+
+.logo-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.logo-container img {
+  max-width: 120px;
+  height: auto;
+}
+
+h1 {
+  text-align: center;
+  color: var(--color-gold);
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--color-text-muted);
+  margin-top: 0;
+  margin-bottom: 30px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+fieldset {
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 20px;
+  margin: 0;
+}
+
+legend {
+  color: var(--color-gold);
+  font-weight: bold;
+  padding: 0 10px;
+}
+
+input[type="text"],
+input[type="tel"],
+input[type="email"],
+select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  background-color: var(--color-dark-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  color: var(--color-text);
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--color-gold);
+}
+
+.btn-primary, .btn-secondary {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background-color: var(--color-gold);
+  color: var(--color-dark-bg);
+  width: 100%;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.1);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-gold);
+  border: 1px solid var(--color-gold);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-gold);
+  color: var(--color-dark-bg);
+}
+
+#especialistas-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.especialista-bloque {
+  border: 1px dashed var(--color-border);
+  padding: 15px;
+  border-radius: 6px;
+  position: relative;
+}
+
+.btn-remove-especialista {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.mensaje {
+  margin-top: 15px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* --- NUEVO: ESTILOS PARA EL FOOTER --- */
+footer {
+    text-align: center;
+    margin-top: 40px;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9em;
+}
+/* Añade esto al final de tu archivo style.css */
+
+.input-info {
+  font-size: 0.8em;
+  color: var(--color-text-muted);
+  margin-top: -5px;
+  margin-bottom: 10px;
+}
+
+/* --- NUEVO: ESTILOS PARA SUBIDA DE ARCHIVO --- */
+input[type="file"] {
+    display: none; /* Ocultamos el input feo por defecto */
+}
+
+.file-upload-label {
+    display: block;
+    padding: 12px;
+    background-color: var(--color-dark-bg);
+    border: 1px dashed var(--color-border);
+    border-radius: 4px;
+    text-align: center;
+    cursor: pointer;
+    color: var(--color-text-muted);
+    margin-top: 10px;
+}
+
+.file-upload-label:hover {
+    border-color: var(--color-gold);
+    color: var(--color-gold);
+}
+
+#image-preview-container {
+    margin-top: 15px;
+    position: relative;
+    width: 200px;
+    height: 150px;
+}
+
+#image-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid var(--color-border);
+}
+
+#remove-image-btn {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+}
+/* --- ESTILOS PARA NUEVOS ELEMENTOS --- */
+
+/* Contenedor para el botón de volver */
+.navigation-buttons {
+    text-align: center; /* Centra el botón */
+    margin-top: 30px; /* Le da espacio para que no esté pegado al formulario */
+}
+
+/* Estilos para el enlace del footer */
+footer a {
+    color: inherit; /* Hereda el color grisáceo del resto del texto */
+    text-decoration: none; /* Le quita el subrayado por defecto */
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+/* Efecto al pasar el mouse por encima del enlace del footer */
+footer a:hover {
+    color: var(--color-gold); /* Cambia al color dorado característico */
+    text-decoration: underline; /* Muestra el subrayado para indicar que es un link */
+}
+/* --- ESTILOS PARA HORARIOS Y REDES SOCIALES --- */
+
+/* Estilo general para las nuevas secciones */
+.horarios-section, .social-section {
+    margin-top: 25px; /* Más espacio para separar */
+    margin-bottom: 15px;
+    padding-top: 15px;
+    border-top: 1px solid var(--color-border); /* Línea divisoria sutil */
+}
+
+/* Etiquetas principales de cada sección */
+.horarios-label, .social-label {
+    display: block;
+    color: var(--color-gold); /* Usamos el color dorado para destacar */
+    margin-bottom: 15px;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+/* Contenedor de la tabla de horarios */
+.horarios-grid {
+    display: grid;
+    /* Columnas: Día (110px), Mañana (flexible), Tarde (flexible), Cerrado (70px) */
+    grid-template-columns: 110px 1fr 1fr 70px; 
+    gap: 10px;
+    align-items: center; /* Centra verticalmente los elementos de cada fila */
+}
+
+/* Encabezados de la tabla de horarios */
+.horarios-grid .header {
+    font-size: 0.8em;
+    font-weight: bold;
+    color: var(--color-text-muted);
+    text-align: center;
+    padding-bottom: 5px;
+}
+
+/* Etiqueta del día de la semana (Lunes, Martes, etc.) */
+.horarios-grid .dia-label {
+    font-weight: normal;
+    font-size: 0.95em;
+    padding-left: 5px;
+}
+
+/* Contenedor del checkbox "Cerrado" */
+.horarios-grid .cerrado-check-container {
+    text-align: center;
+}
+
+/* Estilo del checkbox "Cerrado" para que sea más grande y fácil de clickear */
+.horarios-grid .cerrado-check {
+    transform: scale(1.4);
+    cursor: pointer;
+    accent-color: var(--color-gold); /* Hace que el tick sea del color dorado */
+}
+
+/* Grupo de entrada para cada red social (etiqueta + campo) */
+.social-input-group {
+    margin-bottom: 15px;
+}
+
+/* Etiqueta de cada red social (Instagram, Facebook, etc.) */
+.social-input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+    color: var(--color-text-muted);
+}
+/* --- ESTILOS PARA EL ACORDEÓN --- */
+
+.acordeon {
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    margin-bottom: 10px;
+    overflow: hidden; /* Importante para la animación */
+}
+
+.acordeon-header {
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    padding: 15px;
+    text-align: left;
+    color: var(--color-text);
+    font-size: 1.1em;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.acordeon-header:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.acordeon-icon {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: var(--color-gold);
+    transition: transform 0.3s ease;
+}
+
+.acordeon-header.active .acordeon-icon {
+    transform: rotate(45deg);
+}
+
+.acordeon-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+    padding: 0 15px;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* No necesitamos la línea divisoria ni márgenes superiores dentro del acordeón */
+.horarios-section, .social-section {
+    margin-top: 0;
+    border-top: none;
+}

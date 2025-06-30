@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro de Instituciones - Interconectar Monteros</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="logo-container">
+      <img src="logo.png" alt="Logo Interconectar Monteros IA">
+    </div>
+    <h1>Registro de Instituciones y Comercios</h1>
+    <p class="subtitle">Formá parte de la guía digital de Monteros. Completá los datos para que todos te encuentren.</p>
+
+    <form id="registroForm">
+      
+      <!-- Fieldset 1: Datos BÁSICOS del Establecimiento -->
+      <fieldset>
+        <legend>Datos del Establecimiento</legend>
+        <input type="text" name="nombre_establecimiento" placeholder="Nombre del Establecimiento" required>
+        
+        <select name="rubro" id="rubro_select" required>
+          <option value="" disabled selected>Seleccioná un rubro...</option>
+          <optgroup label="Salud y Bienestar">
+            <option value="Farmacia">Farmacia</option>
+            <option value="Consultorio Médico">Consultorio Médico</option>
+            <option value="Laboratorio de Análisis">Laboratorio de Análisis</option>
+            <option value="Centro de Diagnóstico por Imágenes">Centro de Diagnóstico por Imágenes</option>
+            <option value="Óptica">Óptica</option>
+            <option value="Veterinaria">Veterinaria</option>
+            <option value="Gimnasio">Gimnasio</option>
+          </optgroup>
+          <optgroup label="Comercios">
+            <option value="Supermercado / Almacén">Supermercado / Almacén</option>
+            <option value="Ferretería">Ferretería</option>
+            <option value="Tienda de Ropa y Accesorios">Tienda de Ropa y Accesorios</option>
+            <option value="Librería">Librería</option>
+            <option value="Juguetería">Juguetería</option>
+            <option value="Tienda de Electrónica">Tienda de Electrónica</option>
+            <option value="Kiosco">Kiosco</option>
+          </optgroup>
+          <optgroup label="Gastronomía">
+            <option value="Restaurante / Bar">Restaurante / Bar</option>
+            <option value="Cafetería">Cafetería</option>
+            <option value="Pizzería">Pizzería</option>
+            <option value="Heladería">Heladería</option>
+            <option value="Panadería / Confitería">Panadería / Confitería</option>
+          </optgroup>
+          <optgroup label="Servicios">
+            
+            <option value="Servicio Profesional (Contador, Abogado, etc.)">Servicio Profesional (Contador, Abogado, etc.)</option>
+            <option value="Servicio Técnico (Local)">Servicio Técnico (Local)</option>
+            <option value="Servicio a Domicilio">Servicio a Domicilio (Plomero, Electricista, etc.)</option>
+            <option value="Peluquería / Barbería">Peluquería / Barbería</option>
+            <option value="Taller Mecánico">Taller Mecánico</option>
+            <option value="Lavadero de Autos">Lavadero de Autos</option>
+          </optgroup>
+          <optgroup label="Entidades y Otros">
+            <option value="Empresa">Empresa (Servicios / Producción)</option>
+            <option value="Institución Educativa">Institución Educativa</option>
+            <option value="Trámite Municipal">Trámite Municipal</option>
+            <option value="Comisaría">Comisaría</option>
+            <option value="ONG / Fundación">ONG / Fundación</option>
+            <option value="Otro">Otro (Especificar)</option>
+          </optgroup>
+        </select>
+        <input type="text" name="rubro_otro" id="rubro_otro_input" placeholder="Por favor, especificá el rubro" style="display: none;">
+
+        <input type="text" name="direccion" placeholder="Dirección Exacta (Ej: Sarmiento 550)" required>
+        <p class="input-info">Usaremos esta dirección para crear un link a Google Maps.</p>
+      </fieldset>
+
+      <!-- ACORDEÓN HORARIOS -->
+      <div class="acordeon">
+          <button type="button" class="acordeon-header">
+              <span>🕒 Horarios de Atención</span>
+              <span class="acordeon-icon">+</span>
+          </button>
+          <div class="acordeon-content">
+              <div class="horarios-grid">
+                  <div class="header">Día</div>
+                  <div class="header">Horario Mañana</div>
+                  <div class="header">Horario Tarde</div>
+                  <div class="header">Cerrado</div>
+                  <script>
+                      const dias = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
+                      dias.forEach(dia => {
+                          const diaId = dia.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                          document.write(`
+                              <label class="dia-label">${dia}</label>
+                              <input type="text" name="horario_${diaId}_manana" placeholder="Ej: 09:00 - 13:00">
+                              <input type="text" name="horario_${diaId}_tarde" placeholder="Ej: 17:00 - 21:00">
+                              <div class="cerrado-check-container">
+                                  <input type="checkbox" id="cerrado_${diaId}" name="cerrado_${diaId}" class="cerrado-check">
+                              </div>
+                          `);
+                      });
+                  </script>
+              </div>
+          </div>
+      </div>
+
+      <!-- ACORDEÓN REDES SOCIALES -->
+      <div class="acordeon">
+          <button type="button" class="acordeon-header">
+              <span>🌐 Redes Sociales y Contacto</span>
+              <span class="acordeon-icon">+</span>
+          </button>
+          <div class="acordeon-content">
+              <div class="social-input-group">
+                  <label for="instagram">Usuario de Instagram (sin @)</label>
+                  <input type="text" id="instagram" name="instagram" placeholder="ej: cciamonteros">
+              </div>
+              <div class="social-input-group">
+                  <label for="facebook">Usuario o link de Facebook</label>
+                  <input type="text" id="facebook" name="facebook" placeholder="ej: cciamonteros o el link completo">
+              </div>
+              <div class="social-input-group">
+                  <label for="whatsapp">Teléfono / WhatsApp de Contacto (público)</label>
+                  <input type="tel" id="whatsapp" name="whatsapp" placeholder="3865123456 (solo números)" required>
+              </div>
+          </div>
+      </div>
+
+      <!-- Fieldset para FOTO DEL LOCAL -->
+      <fieldset>
+        <legend>Foto del Local</legend>
+        <label for="file-upload" class="file-upload-label">
+          📷 Subir foto del frente del local
+        </label>
+        <input id="file-upload" type="file" name="foto_local" accept="image/*">
+        <div id="image-preview-container" style="display: none;">
+          <img id="image-preview" src="#" alt="Vista previa de la imagen"/>
+          <button type="button" id="remove-image-btn" class="btn-remove-especialista">X</button>
+        </div>
+      </fieldset>
+
+      <!-- Fieldset para ESPECIALISTAS -->
+      <fieldset>
+        <legend>Especialistas / Profesionales (si aplica)</legend>
+        <p style="font-size: 0.9em; color: var(--color-text-muted); margin-top: -5px; margin-bottom: 15px;">Si tu negocio tiene profesionales con horarios o contactos específicos (médicos, peluqueros, etc.), podés añadirlos aquí.</p>
+        <div id="especialistas-container"></div>
+        <button type="button" id="add-especialista-btn" class="btn-secondary">+ Añadir Especialista</button>
+      </fieldset>
+      
+      <!-- Fieldset para CONTACTO DEL RESPONSABLE -->
+      <fieldset>
+        <legend>Datos de Contacto del Responsable (No será público)</legend>
+        <input type="text" name="contacto_responsable" placeholder="Nombre del Dueño o Responsable" required>
+        <input type="email" name="email_responsable" placeholder="Email del Responsable (para notificaciones)" required>
+      </fieldset>
+
+      <button type="submit" id="submit-btn" class="btn-primary">Registrar Establecimiento</button>
+      <div id="mensaje" class="mensaje"></div>
+    </form>
+
+    <div class="navigation-buttons">
+      <a href="https://www.cciam.com.ar/" class="btn-secondary" target="_blank" rel="noopener noreferrer">← Volver a la página principal</a>
+    </div>
+
+  </div>
+
+  <footer>
+    © 2025 <a href="https://www.cciam.com.ar/" target="_blank" rel="noopener noreferrer">CCIAM</a> - Interconectar Monteros. Todos los derechos reservados.
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
