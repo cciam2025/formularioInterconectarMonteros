@@ -28,10 +28,6 @@ document.addEventListener('DOMContentLoaded', function() {
     let fotoBase64 = null;
 
     // --- LÓGICA DE INTERACTIVIDAD ---
-
-    // ==================================================================
-    // INICIALIZACIÓN DE HORARIOS RESPONSIVE (NUEVO)
-    // ==================================================================
     const contenedorHorarios = document.querySelector('.horarios-lista-responsive');
     if (contenedorHorarios) {
         const diasSemana = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
@@ -52,7 +48,6 @@ document.addEventListener('DOMContentLoaded', function() {
             contenedorHorarios.innerHTML += diaHtml;
         });
 
-        // Añadir la lógica para mostrar/ocultar los inputs de hora al marcar el checkbox
         document.querySelectorAll('.abierto-check').forEach(checkbox => {
             checkbox.addEventListener('change', e => {
                 const inputsContainer = e.target.closest('.dia-fila').querySelector('.dia-inputs');
@@ -63,8 +58,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-
-    // Lógica para mostrar/ocultar el campo "Otro" rubro
     if (rubroSelect) {
         rubroSelect.addEventListener('change', () => {
             if (rubroSelect.value === 'Otro') {
@@ -77,7 +70,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-    // Lógica para la vista previa de la foto
     if (fileUpload) {
         fileUpload.addEventListener('change', (e) => {
             const file = e.target.files[0];
@@ -92,7 +84,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-    // Lógica para quitar la foto seleccionada
     if (removeImageBtn) {
         removeImageBtn.addEventListener('click', () => {
             fileUpload.value = '';
@@ -101,7 +92,6 @@ document.addEventListener('DOMContentLoaded', function() {
             imagePreviewContainer.style.display = 'none';
         });
     }
-    // Lógica para añadir un nuevo bloque de especialista
     if (addEspecialistaBtn) {
         addEspecialistaBtn.addEventListener('click', () => {
             especialistaCounter++;
@@ -121,7 +111,6 @@ document.addEventListener('DOMContentLoaded', function() {
             especialistasContainer.appendChild(newEspecialistaBloque);
         });
     }
-    // Lógica para el despliegue del ACORDEÓN
     document.querySelectorAll('.acordeon-header').forEach(button => {
         button.addEventListener('click', () => {
             const acordeonContent = button.nextElementSibling;
@@ -136,10 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-
-    // ==================================================================
-    // LÓGICA DE ENVÍO DEL FORMULARIO (¡¡¡CON HORARIOS ACTUALIZADOS!!!)
-    // ==================================================================
+    // --- LÓGICA DE ENVÍO DEL FORMULARIO PRINCIPAL (SIN CAMBIOS) ---
     form.addEventListener('submit', e => {
         e.preventDefault();
         submitBtn.disabled = true;
@@ -147,11 +133,10 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const formData = new FormData(form);
         
-        // a) Recolección de horarios desde la nueva estructura responsive
         let horariosString = "";
         const dias = ["lunes", "martes", "miercoles", "jueves", "viernes", "sabado", "domingo"];
         dias.forEach(dia => {
-            if (formData.get(`abierto_${dia}`)) { // Si el día está marcado como abierto
+            if (formData.get(`abierto_${dia}`)) {
                 const manana = formData.get(`horario_${dia}_manana`);
                 const tarde = formData.get(`horario_${dia}_tarde`);
                 if (manana || tarde) {
@@ -162,7 +147,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         formData.append("horarios_compilado", horariosString || "Cerrado todos los días o no especificado");
 
-        // b) Redes Sociales (sin cambios)
         let socialesString = "";
         const instagram = formData.get('instagram');
         const facebook = formData.get('facebook');
@@ -171,22 +155,23 @@ document.addEventListener('DOMContentLoaded', function() {
         if (socialesString.endsWith(' | ')) socialesString = socialesString.slice(0, -3);
         formData.append("redes_compilado", socialesString);
         
-        // c) Foto (sin cambios)
         if (fotoBase64) {
             formData.append("foto_base64", fotoBase64);
         }
 
-        // d) Especialistas (sin cambios)
         const especialistasData = [];
         document.querySelectorAll('.especialista-bloque').forEach(bloque => {
             const id = bloque.dataset.id;
-            especialistasData.push({ /* ... */ });
+            especialistasData.push({ 
+                nombre: formData.get(`nombre_esp_${id}`), especialidad: formData.get(`especialidad_esp_${id}`),
+                dias: formData.get(`dias_esp_${id}`), horarios: formData.get(`horarios_esp_${id}`),
+                obras_sociales: formData.get(`obrasocial_esp_${id}`), contacto: formData.get(`contacto_esp_${id}`)
+             });
         });
         if (especialistasData.length > 0) {
             formData.append("especialistas_json", JSON.stringify(especialistasData));
         }
 
-        // 3. Hacemos el fetch (sin cambios)
         fetch(scriptURL, { 
             method: 'POST',
             body: formData
@@ -197,7 +182,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 mensajeDiv.style.color = "lightgreen";
                 mensajeDiv.textContent = "¡Registro exitoso! Gracias por sumarte.";
                 form.reset();
-                // ... (código para limpiar el formulario)
+                if (especialistasContainer) especialistasContainer.innerHTML = '';
+                if (rubroOtroInput) rubroOtroInput.style.display = 'none';
+                if (removeImageBtn) removeImageBtn.click();
+                especialistaCounter = 0;
+                document.querySelectorAll('.acordeon-header.active').forEach(button => button.click());
             } else {
                throw new Error(data.message || 'El script de Google devolvió un error.');
             }
@@ -212,6 +201,55 @@ document.addEventListener('DOMContentLoaded', function() {
             submitBtn.textContent = 'Registrar Establecimiento';
         });
     });
+
+    // ==================================================================
+    // LÓGICA PARA ENVIAR SUGERENCIAS (AÑADIDO)
+    // ==================================================================
+    const btnEnviarSugerencia = document.getElementById('btnEnviarSugerencia');
+    const cajaSugerencias = document.getElementById('cajaSugerencias');
+    const mensajeSugerencia = document.getElementById('mensajeSugerencia');
+
+    if (btnEnviarSugerencia) {
+        btnEnviarSugerencia.addEventListener('click', () => {
+            const sugerencia = cajaSugerencias.value.trim();
+            if (sugerencia.length < 10) {
+                mensajeSugerencia.style.color = "tomato";
+                mensajeSugerencia.textContent = "Por favor, escribí una sugerencia un poco más detallada.";
+                return;
+            }
+
+            btnEnviarSugerencia.disabled = true;
+            btnEnviarSugerencia.textContent = 'Enviando...';
+            mensajeSugerencia.textContent = '';
+            
+            const sugerenciaData = new FormData();
+            sugerenciaData.append("sugerencia", sugerencia);
+
+            fetch(scriptURL, {
+                method: 'POST',
+                body: sugerenciaData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.result === 'success') {
+                    mensajeSugerencia.style.color = "lightgreen";
+                    mensajeSugerencia.textContent = "¡Gracias! Tu sugerencia fue enviada.";
+                    cajaSugerencias.value = '';
+                } else {
+                    throw new Error(data.message || 'Error desconocido');
+                }
+            })
+            .catch(error => {
+                mensajeSugerencia.style.color = "tomato";
+                mensajeSugerencia.textContent = `Error al enviar: ${error.message}`;
+            })
+            .finally(() => {
+                btnEnviarSugerencia.disabled = false;
+                btnEnviarSugerencia.textContent = 'Enviar Sugerencia';
+            });
+        });
+    }
+
 });
 
 // Función para remover un especialista (sin cambios)
