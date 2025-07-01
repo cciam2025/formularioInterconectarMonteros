@@ -359,3 +359,52 @@ footer a:hover {
     margin-top: 0;
     border-top: none;
 }
+
+/* --- ESTILOS PARA HORARIOS RESPONSIVE (NUEVO) --- */
+
+.horarios-lista-responsive {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espacio entre cada día */
+}
+
+.dia-fila {
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    padding: 10px;
+}
+
+.dia-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.dia-control label {
+    font-size: 1.1em;
+    color: var(--color-text);
+    flex-grow: 1; /* Ocupa el espacio restante */
+}
+
+.abierto-check {
+    transform: scale(1.5);
+    accent-color: var(--color-gold);
+    flex-shrink: 0; /* Evita que el checkbox se encoja */
+}
+
+.dia-inputs {
+    display: none; /* Oculto por defecto */
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px dashed var(--color-border);
+}
+
+/* En pantallas más grandes, ponemos los inputs uno al lado del otro */
+@media (min-width: 500px) {
+    .dia-inputs {
+        flex-direction: row;
+    }
+}
