@@ -1,9 +1,9 @@
 // ==================================================================
-// SCRIPT.JS - VERSIÓN FINAL CON HORARIOS RESPONSIVE
+// SCRIPT.JS - VERSIÓN FINAL CON DETALLES CONDICIONALES INTEGRADOS
 // ==================================================================
 
 // ¡¡¡IMPORTANTE!!! ASEGÚRATE DE QUE ESTA URL SEA LA CORRECTA
-const scriptURL = 'https://script.google.com/macros/s/AKfycbw3FNeUyvxNClsEa-khrD4t2q5ozfOJKlsAuZUGkV9eKmmMPKXjc-MmsXLAtsQd7tAE-Q/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbxlwsKU1BlK7BCC4kA-Vma-BJc695RqkbzDrp51b1dUuXE-PRPCliXDldgH5M42UmJE/exec';
 
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -23,11 +23,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const imagePreviewContainer = document.getElementById('image-preview-container');
     const imagePreview = document.getElementById('image-preview');
     const removeImageBtn = document.getElementById('remove-image-btn');
+    const deliveryCheckbox = document.getElementById('ofrece_delivery');
+    const mayoristaCheckbox = document.getElementById('es_mayorista');
 
     let especialistaCounter = 0;
     let fotoBase64 = null;
 
     // --- LÓGICA DE INTERACTIVIDAD ---
+
+    // Inicialización de Horarios Responsive
     const contenedorHorarios = document.querySelector('.horarios-lista-responsive');
     if (contenedorHorarios) {
         const diasSemana = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
@@ -58,6 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Lógica para mostrar/ocultar el campo "Otro" rubro
     if (rubroSelect) {
         rubroSelect.addEventListener('change', () => {
             if (rubroSelect.value === 'Otro') {
@@ -70,6 +75,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // Lógica para la vista previa de la foto
     if (fileUpload) {
         fileUpload.addEventListener('change', (e) => {
             const file = e.target.files[0];
@@ -84,6 +91,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // Lógica para quitar la foto seleccionada
     if (removeImageBtn) {
         removeImageBtn.addEventListener('click', () => {
             fileUpload.value = '';
@@ -92,6 +101,8 @@ document.addEventListener('DOMContentLoaded', function() {
             imagePreviewContainer.style.display = 'none';
         });
     }
+
+    // Lógica para añadir un nuevo bloque de especialista
     if (addEspecialistaBtn) {
         addEspecialistaBtn.addEventListener('click', () => {
             especialistaCounter++;
@@ -111,6 +122,8 @@ document.addEventListener('DOMContentLoaded', function() {
             especialistasContainer.appendChild(newEspecialistaBloque);
         });
     }
+
+    // Lógica para el despliegue del ACORDEÓN
     document.querySelectorAll('.acordeon-header').forEach(button => {
         button.addEventListener('click', () => {
             const acordeonContent = button.nextElementSibling;
@@ -125,13 +138,47 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // --- LÓGICA DE ENVÍO DEL FORMULARIO PRINCIPAL (SIN CAMBIOS) ---
+    // === NUEVA LÓGICA PARA CAMPOS CONDICIONALES ===
+    if (deliveryCheckbox) {
+        deliveryCheckbox.addEventListener('change', () => {
+            document.getElementById('area_delivery').style.display = deliveryCheckbox.checked ? 'block' : 'none';
+        });
+    }
+    if (mayoristaCheckbox) {
+        mayoristaCheckbox.addEventListener('change', () => {
+            document.getElementById('compra_minima').style.display = mayoristaCheckbox.checked ? 'block' : 'none';
+        });
+    }
+    
+    if (rubroSelect) {
+        rubroSelect.addEventListener('change', () => {
+            const valor = rubroSelect.value;
+            document.querySelectorAll('.seccion-condicional').forEach(s => s.style.display = 'none');
+            
+            if (valor === 'Farmacia') {
+                document.getElementById('seccion_farmacia').style.display = 'block';
+            } else if (['Restaurante / Parrilla', 'Bar / Cervecería', 'Cafetería / Casa de Té', 'Pizzería', 'Sandwichería / Lomitería', 'Rotisería / Casa de Comidas', 'Catering / Servicio para Eventos'].includes(valor)) {
+                document.getElementById('seccion_gastro').style.display = 'block';
+            } else if (['Supermercado', 'Almacén / Despensa'].includes(valor)) {
+                document.getElementById('seccion_comercio').style.display = 'block';
+            } else if (valor.includes('Servicio') || ['Plomería / Gasista', 'Electricista', 'Cerrajería', 'Taller Mecánico'].includes(valor)) {
+                document.getElementById('seccion_servicios').style.display = 'block';
+            } else if (valor.includes('Hotel') || valor.includes('Alojamiento')) {
+                document.getElementById('seccion_alojamiento').style.display = 'block';
+            }
+        });
+    }
+
+    // --- LÓGICA DE ENVÍO DEL FORMULARIO (SIN CAMBIOS EN EL MÉTODO) ---
     form.addEventListener('submit', e => {
         e.preventDefault();
         submitBtn.disabled = true;
         submitBtn.textContent = 'Enviando...';
         
         const formData = new FormData(form);
+        
+        // La recolección de datos ya incluye los nuevos campos si están presentes.
+        // No es necesario añadir lógica extra aquí porque FormData los toma automáticamente.
         
         let horariosString = "";
         const dias = ["lunes", "martes", "miercoles", "jueves", "viernes", "sabado", "domingo"];
@@ -145,7 +192,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         });
-        formData.append("horarios_compilado", horariosString || "Cerrado todos los días o no especificado");
+        formData.append("horarios_compilado", horariosString || "No especificado");
 
         let socialesString = "";
         const instagram = formData.get('instagram');
@@ -201,55 +248,6 @@ document.addEventListener('DOMContentLoaded', function() {
             submitBtn.textContent = 'Registrar Establecimiento';
         });
     });
-
-    // ==================================================================
-    // LÓGICA PARA ENVIAR SUGERENCIAS (AÑADIDO)
-    // ==================================================================
-    const btnEnviarSugerencia = document.getElementById('btnEnviarSugerencia');
-    const cajaSugerencias = document.getElementById('cajaSugerencias');
-    const mensajeSugerencia = document.getElementById('mensajeSugerencia');
-
-    if (btnEnviarSugerencia) {
-        btnEnviarSugerencia.addEventListener('click', () => {
-            const sugerencia = cajaSugerencias.value.trim();
-            if (sugerencia.length < 10) {
-                mensajeSugerencia.style.color = "tomato";
-                mensajeSugerencia.textContent = "Por favor, escribí una sugerencia un poco más detallada.";
-                return;
-            }
-
-            btnEnviarSugerencia.disabled = true;
-            btnEnviarSugerencia.textContent = 'Enviando...';
-            mensajeSugerencia.textContent = '';
-            
-            const sugerenciaData = new FormData();
-            sugerenciaData.append("sugerencia", sugerencia);
-
-            fetch(scriptURL, {
-                method: 'POST',
-                body: sugerenciaData,
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.result === 'success') {
-                    mensajeSugerencia.style.color = "lightgreen";
-                    mensajeSugerencia.textContent = "¡Gracias! Tu sugerencia fue enviada.";
-                    cajaSugerencias.value = '';
-                } else {
-                    throw new Error(data.message || 'Error desconocido');
-                }
-            })
-            .catch(error => {
-                mensajeSugerencia.style.color = "tomato";
-                mensajeSugerencia.textContent = `Error al enviar: ${error.message}`;
-            })
-            .finally(() => {
-                btnEnviarSugerencia.disabled = false;
-                btnEnviarSugerencia.textContent = 'Enviar Sugerencia';
-            });
-        });
-    }
-
 });
 
 // Función para remover un especialista (sin cambios)
