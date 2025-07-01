@@ -359,55 +359,6 @@ footer a:hover {
     margin-top: 0;
     border-top: none;
 }
-
-/* --- ESTILOS PARA HORARIOS RESPONSIVE (NUEVO) --- */
-
-.horarios-lista-responsive {
-    display: flex;
-    flex-direction: column;
-    gap: 15px; /* Espacio entre cada día */
-}
-
-.dia-fila {
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
-    padding: 10px;
-}
-
-.dia-control {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-}
-
-.dia-control label {
-    font-size: 1.1em;
-    color: var(--color-text);
-    flex-grow: 1; /* Ocupa el espacio restante */
-}
-
-.abierto-check {
-    transform: scale(1.5);
-    accent-color: var(--color-gold);
-    flex-shrink: 0; /* Evita que el checkbox se encoja */
-}
-
-.dia-inputs {
-    display: none; /* Oculto por defecto */
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px dashed var(--color-border);
-}
-
-/* En pantallas más grandes, ponemos los inputs uno al lado del otro */
-@media (min-width: 500px) {
-    .dia-inputs {
-        flex-direction: row;
-    }
-}
 /* --- ESTILOS PARA CAJA DE SUGERENCIAS --- */
 .sugerencias-container {
     margin-top: 40px;
@@ -447,4 +398,70 @@ textarea {
 textarea:focus {
     outline: none;
     border-color: var(--color-gold);
+}
+/* --- ESTILOS PARA LA SECCIÓN DE ATRIBUTOS DETALLADOS --- */
+
+.atributos-container {
+    margin-top: 25px;
+    border-top: 1px solid var(--color-border);
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Espacio entre cada grupo de atributos */
+}
+
+/* Estilo para cada grupo (ej: "Métodos de Pago", "Tipo de Factura") */
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Estilo para las etiquetas de cada grupo */
+.form-group > label {
+    font-weight: bold;
+    color: var(--color-text-muted);
+    margin-bottom: 10px;
+    font-size: 1em;
+    text-align: left;
+}
+
+/* Contenedor para los checkboxes, para ponerlos en línea */
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap; /* Permite que pasen a la siguiente línea si no hay espacio */
+    align-items: center;
+    gap: 15px; /* Espacio horizontal entre cada checkbox */
+}
+
+.checkbox-group label {
+    color: var(--color-text);
+    font-weight: normal;
+    cursor: pointer;
+    font-size: 0.95em;
+    margin-left: -10px; /* Acerca la etiqueta al checkbox */
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: auto; /* Anula el 100% de ancho de los otros inputs */
+    transform: scale(1.3);
+    accent-color: var(--color-gold);
+    cursor: pointer;
+    margin: 0;
+}
+
+/* Estilos para las secciones condicionales (los fieldsets que se ocultan) */
+.seccion-condicional {
+    margin-top: 15px;
+    border-style: dashed;
+}
+/* --- AJUSTES PARA EL NUEVO ACORDEÓN DE ATRIBUTOS --- */
+
+.acordeon-content .form-group {
+    margin-bottom: 20px; /* Añade espacio entre cada grupo de atributos */
+}
+
+.acordeon-content .seccion-condicional {
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px dashed var(--color-border); /* Línea divisoria para las secciones específicas */
 }
