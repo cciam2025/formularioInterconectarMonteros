@@ -3,7 +3,7 @@
 // ==================================================================
 
 // ¡¡¡IMPORTANTE!!! ASEGÚRATE DE QUE ESTA URL SEA LA CORRECTA
-const scriptURL = 'https://script.google.com/macros/s/AKfycbzndv2fIg1KT19jfys7kZhtFBff1Cl-MU4XIzum0t8Mvjdzd5pk2VWk9C84JZfo9-m6/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbw3FNeUyvxNClsEa-khrD4t2q5ozfOJKlsAuZUGkV9eKmmMPKXjc-MmsXLAtsQd7tAE-Q/exec';
 
 document.addEventListener('DOMContentLoaded', function() {
 
