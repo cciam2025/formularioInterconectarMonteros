@@ -73,28 +73,19 @@
       </fieldset>
 
       <!-- ACORDEÓN HORARIOS -->
+      <!-- ACORDEÓN HORARIOS (VERSIÓN RESPONSIVE) -->
       <div class="acordeon">
           <button type="button" class="acordeon-header">
               <span>🕒 Horarios de Atención</span>
               <span class="acordeon-icon">+</span>
           </button>
           <div class="acordeon-content">
-              <div class="horarios-grid">
-                  <div class="header">Día</div>
-                  <div class="header">Horario Mañana</div>
-                  <div class="header">Horario Tarde</div>
-                  <div class="header">Cerrado</div>
-                  <script>
-                      const dias = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
-                      dias.forEach(dia => {
-                          const diaId = dia.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-                          document.write(`
-                              <label class="dia-label">${dia}</label>
-                              <input type="text" name="horario_${diaId}_manana" placeholder="Ej: 09:00 - 13:00">
-                              <input type="text" name="horario_${diaId}_tarde" placeholder="Ej: 17:00 - 21:00">
-                              <div class="cerrado-check-container">
-                                  <input type="checkbox" id="cerrado_${diaId}" name="cerrado_${diaId}" class="cerrado-check">
-                              </div>
+              <p class="input-info">Marcá los días que abrís y completá los horarios. Si tenés horario corrido, usá solo el campo "Mañana".</p>
+              <div class="horarios-lista-responsive">
+                <!-- El contenido se generará con JavaScript -->
+              </div>
+          </div>
+      </div>
                           `);
                       });
                   </script>
