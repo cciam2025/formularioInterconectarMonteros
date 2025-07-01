@@ -21,50 +21,130 @@
         <legend>Datos del Establecimiento</legend>
         <input type="text" name="nombre_establecimiento" placeholder="Nombre del Establecimiento" required>
         
-        <select name="rubro" id="rubro_select" required>
-          <option value="" disabled selected>Seleccioná un rubro...</option>
-          <optgroup label="Salud y Bienestar">
-            <option value="Farmacia">Farmacia</option>
-            <option value="Consultorio Médico">Consultorio Médico</option>
-            <option value="Laboratorio de Análisis">Laboratorio de Análisis</option>
-            <option value="Centro de Diagnóstico por Imágenes">Centro de Diagnóstico por Imágenes</option>
-            <option value="Óptica">Óptica</option>
-            <option value="Veterinaria">Veterinaria</option>
-            <option value="Gimnasio">Gimnasio</option>
-          </optgroup>
-          <optgroup label="Comercios">
-            <option value="Supermercado / Almacén">Supermercado / Almacén</option>
-            <option value="Ferretería">Ferretería</option>
-            <option value="Tienda de Ropa y Accesorios">Tienda de Ropa y Accesorios</option>
-            <option value="Librería">Librería</option>
-            <option value="Juguetería">Juguetería</option>
-            <option value="Tienda de Electrónica">Tienda de Electrónica</option>
-            <option value="Kiosco">Kiosco</option>
-          </optgroup>
-          <optgroup label="Gastronomía">
-            <option value="Restaurante / Bar">Restaurante / Bar</option>
-            <option value="Cafetería">Cafetería</option>
-            <option value="Pizzería">Pizzería</option>
-            <option value="Heladería">Heladería</option>
-            <option value="Panadería / Confitería">Panadería / Confitería</option>
-          </optgroup>
-          <optgroup label="Servicios">
-            <option value="Servicio Profesional (Contador, Abogado, etc.)">Servicio Profesional (Contador, Abogado, etc.)</option>
-            <option value="Servicio Técnico (Local)">Servicio Técnico (Local)</option>
-            <option value="Servicio a Domicilio">Servicio a Domicilio (Plomero, Electricista, etc.)</option>
-            <option value="Peluquería / Barbería">Peluquería / Barbería</option>
-            <option value="Taller Mecánico">Taller Mecánico</option>
-            <option value="Lavadero de Autos">Lavadero de Autos</option>
-          </optgroup>
-          <optgroup label="Entidades y Otros">
-            <option value="Empresa">Empresa (Servicios / Producción)</option>
-            <option value="Institución Educativa">Institución Educativa</option>
-            <option value="Trámite Municipal">Trámite Municipal</option>
-            <option value="Comisaría">Comisaría</option>
-            <option value="ONG / Fundación">ONG / Fundación</option>
-            <option value="Otro">Otro (Especificar)</option>
-          </optgroup>
-        </select>
+       <select name="rubro" id="rubro_select" required>
+  <option value="" disabled selected>Seleccioná un rubro...</option>
+
+  <optgroup label="🛒 Comercios y Tiendas">
+    <option value="Almacén / Despensa">Almacén / Despensa</option>
+    <option value="Supermercado">Supermercado</option>
+    <option value="Carnicería / Pollería">Carnicería / Pollería</option>
+    <option value="Verdulería / Frutería">Verdulería / Frutería</option>
+    <option value="Ferretería">Ferretería</option>
+    <option value="Tienda de Ropa y Accesorios">Tienda de Ropa y Accesorios</option>
+    <option value="Zapatería">Zapatería</option>
+    <option value="Librería y Papelería">Librería y Papelería</option>
+    <option value="Juguetería">Juguetería</option>
+    <option value="Tienda de Electrónica y Celulares">Tienda de Electrónica y Celulares</option>
+    <option value="Bazar y Regalería">Bazar y Regalería</option>
+    <option value="Kiosco / Maxikiosco">Kiosco / Maxikiosco</option>
+    <option value="Dietética / Herboristería">Dietética / Herboristería</option>
+    <option value="Mueblería y Decoración">Mueblería y Decoración</option>
+    <option value="Perfumería y Cosmética">Perfumería y Cosmética</option>
+    <option value="Tienda de Mascotas / Forrajería">Tienda de Mascotas / Forrajería</option>
+    <option value="Vinería / Tienda de Bebidas">Vinería / Tienda de Bebidas</option>
+    <option value="Vivero / Florería">Vivero / Florería</option>
+    <option value="Cotillón y Repostería">Cotillón y Repostería</option>
+  </optgroup>
+
+  <optgroup label="🍔 Gastronomía y Bares">
+    <option value="Restaurante / Parrilla">Restaurante / Parrilla</option>
+    <option value="Bar / Cervecería">Bar / Cervecería</option>
+    <option value="Cafetería / Casa de Té">Cafetería / Casa de Té</option>
+    <option value="Pizzería">Pizzería</option>
+    <option value="Sandwichería / Lomitería">Sandwichería / Lomitería</option>
+    <option value="Heladería">Heladería</option>
+    <option value="Panadería / Confitería">Panadería / Confitería</option>
+    <option value="Rotisería / Casa de Comidas">Rotisería / Casa de Comidas</option>
+    <option value="Delivery de Bebidas">Delivery de Bebidas</option>
+    <option value="Catering / Servicio para Eventos">Catering / Servicio para Eventos</option>
+  </optgroup>
+  
+  <optgroup label="🩺 Salud y Bienestar">
+    <option value="Farmacia">Farmacia</option>
+    <option value="Consultorio Médico">Consultorio Médico (Clínico, Pediatra, etc.)</option>
+    <option value="Consultorio Odontológico">Consultorio Odontológico</option>
+    <option value="Consultorio Kinesiología / Fisioterapia">Consultorio Kinesiología / Fisioterapia</option>
+    <option value="Consultorio Psicológico">Consultorio Psicológico</option>
+    <option value="Laboratorio de Análisis Clínicos">Laboratorio de Análisis Clínicos</option>
+    <option value="Centro de Diagnóstico por Imágenes">Centro de Diagnóstico por Imágenes</option>
+    <option value="Óptica">Óptica</option>
+    <option value="Ortopedia">Ortopedia</option>
+    <option value="Veterinaria">Veterinaria</option>
+    <option value="Gimnasio / Centro de Fitness">Gimnasio / Centro de Fitness</option>
+  </optgroup>
+
+  <optgroup label="🛠️ Oficios y Servicios Técnicos">
+    <option value="Servicio a Domicilio (General)">Servicio a Domicilio (General)</option>
+    <option value="Plomería / Gasista">Plomería / Gasista</option>
+    <option value="Electricista">Electricista</option>
+    <option value="Albañilería / Construcción">Albañilería / Construcción</option>
+    <option value="Pinturería / Pintor">Pinturería / Pintor</option>
+    <option value="Carpintería / Ebanistería">Carpintería / Ebanistería</option>
+    <option value="Cerrajería">Cerrajería</option>
+    <option value="Servicio Técnico de Electrodomésticos">Servicio Técnico de Electrodomésticos</option>
+    <option value="Servicio Técnico de PC / Celulares">Servicio Técnico de PC / Celulares</option>
+    <option value="Jardinería / Paisajismo">Jardinería / Paisajismo</option>
+    <option value="Fumigación / Control de Plagas">Fumigación / Control de Plagas</option>
+  </optgroup>
+
+  <optgroup label="🚗 Automotores">
+    <option value="Taller Mecánico">Taller Mecánico</option>
+    <option value="Gomería">Gomería</option>
+    <option value="Lavadero de Autos">Lavadero de Autos</option>
+    <option value="Repuestos y Accesorios para Autos">Repuestos y Accesorios para Autos</option>
+    <option value="Chapa y Pintura">Chapa y Pintura</option>
+    <option value="Electricidad del Automotor">Electricidad del Automotor</option>
+  </optgroup>
+
+  <optgroup label="🛵 Mensajería y Transporte">
+    <option value="Servimoto / Cadetería / Mandados">Servimoto / Cadetería / Mandados</option>
+    <option value="Remisería / Taxi">Remisería / Taxi</option>
+    <option value="Transporte / Fletes / Mudanzas">Transporte / Fletes / Mudanzas</option>
+  </optgroup>
+
+  <optgroup label="💅 Estética y Cuidado Personal">
+    <option value="Peluquería / Barbería">Peluquería / Barbería</option>
+    <option value="Centro de Estética / Spa">Centro de Estética / Spa</option>
+    <option value="Manicura / Pedicura">Manicura / Pedicura</option>
+    <option value="Tatuajes y Piercing">Tatuajes y Piercing</option>
+  </optgroup>
+
+  <optgroup label="🎓 Profesionales y Empresas">
+    <option value="Estudio Jurídico (Abogados)">Estudio Jurídico (Abogados)</option>
+    <option value="Estudio Contable (Contadores)">Estudio Contable (Contadores)</option>
+    <option value="Estudio de Arquitectura / Ingeniería">Estudio de Arquitectura / Ingeniería</option>
+    <option value="Escribanía">Escribanía</option>
+    <option value="Agencia de Seguros">Agencia de Seguros</option>
+    <option value="Inmobiliaria">Inmobiliaria</option>
+    <option value="Diseño Gráfico / Publicidad">Diseño Gráfico / Publicidad</option>
+    <option value="Empresa (Servicios / Producción)">Empresa (Servicios / Producción)</option>
+  </optgroup>
+  
+  <optgroup label="🎪 Ferias y Venta Ambulante">
+    <option value="Puesto de Comida Callejera">Puesto de Comida Callejera (tortillas, etc.)</option>
+    <option value="Puesto de Feria (Ropa, Artesanías, etc.)">Puesto de Feria (Ropa, Artesanías, etc.)</option>
+    <option value="Puesto de Revistas y Diarios">Puesto de Revistas y Diarios</option>
+    <option value="Vendedor Ambulante (General)">Vendedor Ambulante (General)</option>
+  </optgroup>
+  
+  <optgroup label="📚 Educación y Cursos">
+    <option value="Institución Educativa (Escuela, Instituto)">Institución Educativa (Escuela, Instituto)</option>
+    <option value="Clases Particulares / Apoyo Escolar">Clases Particulares / Apoyo Escolar</option>
+    <option value="Academia de Arte / Música / Idiomas">Academia de Arte / Música / Idiomas</option>
+  </optgroup>
+
+  <optgroup label="🏛️ Entidades y Otros Servicios">
+    <option value="Salón de Fiestas / Eventos">Salón de Fiestas / Eventos</option>
+    <option value="Hotel / Alojamiento">Hotel / Alojamiento</option>
+    <option value="Lavandería / Tintorería">Lavandería / Tintorería</option>
+    <option value="Trámite Municipal">Trámite Municipal</option>
+    <option value="Comisaría / Entidad Policial">Comisaría / Entidad Policial</option>
+    <option value="Bomberos">Bomberos</option>
+    <option value="ONG / Fundación / Club">ONG / Fundación / Club</option>
+    <option value="Iglesia / Templo Religioso">Iglesia / Templo Religioso</option>
+    <option value="Otro">Otro (Especificar)</option>
+  </optgroup>
+</select>
         <input type="text" name="rubro_otro" id="rubro_otro_input" placeholder="Por favor, especificá el rubro" style="display: none;">
 
         <input type="text" name="direccion" placeholder="Dirección Exacta (Ej: Sarmiento 550)" required>
